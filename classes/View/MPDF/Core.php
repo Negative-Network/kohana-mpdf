@@ -14,15 +14,22 @@ abstract class View_MPDF_Core extends View {
 	protected $mpdf = NULL;
 	protected $view_file = NULL;
 
-	public function __construct($file = NULL, array $data = NULL)
+	public function __construct($file = NULL, array $data = NULL, $mpdf = null)
 	{
 		parent::__construct($file, $data);
-		$this->mpdf = new mPDF('UTF-8', 'A4');
+                if($mpdf != null and is_a($mpdf, 'mPDF'))
+                {
+                    $this->mpdf = $mpdf;
+                }
+                else
+                {
+                    $this->mpdf = new mPDF('UTF-8', 'A4');
+                }
 	}
 
-	public static function factory($view_file = NULL, array $data = NULL)
+	public static function factory($view_file = NULL, array $data = NULL, $mpdf = null)
 	{
-		return new View_MPDF($view_file, $data);
+		return new View_MPDF($view_file, $data, $mpdf);
 	}
 
 	/*
